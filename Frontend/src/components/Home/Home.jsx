@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import { list, list2 } from "../../assets/cards-list";
 import Header from "../Header";
 import Filter from "../Filter";
@@ -11,7 +10,7 @@ export default function Home() {
   return (
     <div className="Home">
       <h1>Hello //////////</h1>
-      <Header />
+      {/* <Header /> */}
       <Filter
         selectedFilter={selectedFilter}
         setSelectedFilter={setSelectedFilter}

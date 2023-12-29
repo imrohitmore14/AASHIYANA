@@ -5,7 +5,7 @@ import MenuItem from "@mui/material/MenuItem";
 import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
 import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
 import "./styles.css";
-import { Link } from "@mui/material";
+import { Link } from "react-router-dom"; // Import Link from 'react-router-dom' instead of '@mui/material/Link'
 import UserLogin from "../Auth/UserLogin";
 import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 
@@ -19,30 +19,30 @@ export default function BasicMenu() {
     setAnchorEl(null);
   };
 
-  const handleUserLogin =() => {
+  const handleUserLogin = () => {
     return (
       <div>
-        <Link to="/UserLogin" className="bg-[#eca74e] hover:bg-[#ee5e5f] duration-200 text-white font-bold py-2 px-4 rounded mt-2 mr-6 ml-4 mx-2" > Log In </Link>
+        <Link
+          to="/UserLogin"
+          className="bg-[#eca74e] hover:bg-[#ee5e5f] duration-200 text-white font-bold py-2 px-4 rounded mt-2 mr-6 ml-4 mx-2"
+        >
+          Log In
+        </Link>
       </div>
     );
-  }
-  const handleUserSignup =() => {
+  };
+  const handleUserSignup = () => {
     return (
       <div>
-        <Link to="/UserSignup" className="bg-[#eca74e] hover:bg-[#ee5e5f] duration-200 text-white font-bold py-2 px-4 rounded mt-2 mr-6 ml-4 mx-2" > Signup </Link>
+        <Link
+          to="/UserSignup"
+          className="bg-[#eca74e] hover:bg-[#ee5e5f] duration-200 text-white font-bold py-2 px-4 rounded mt-2 mr-6 ml-4 mx-2"
+        >
+          Signup
+        </Link>
       </div>
     );
-  }
-
-  // const navigate = useNavigate();
-  //   function handleUserLogin() {
-  //       navigate(`/UserLogin`)
-  //   }
-  
-  //   const navigate2 = useNavigate();
-  //   function handleUserSignup() {
-  //       navigate(`/UserSignup`)
-  //   }
+  };
 
   return (
     <div>
@@ -73,12 +73,8 @@ export default function BasicMenu() {
           },
         }}
       >
-        <MenuItem className="menu-items" onClick={handleUserSignup}>
-          Signup
-        </MenuItem>
-        <MenuItem className="menu-items" onClick={handleUserLogin} >
-          Login
-        </MenuItem>
+        <MenuItem className="menu-items">{handleUserSignup()}</MenuItem>
+        <MenuItem className="menu-items">{handleUserLogin()}</MenuItem>
         <div
           style={{
             height: "1px",
@@ -98,9 +94,9 @@ export default function BasicMenu() {
       </Menu>
 
       <BrowserRouter>
-          <Routes>
-              <Route path="/UserLogin" component={UserLogin} />
-          </Routes>
+        <Routes>
+          <Route path="/UserLogin" component={UserLogin} />
+        </Routes>
       </BrowserRouter>
     </div>
   );
