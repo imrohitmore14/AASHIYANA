@@ -1,10 +1,7 @@
 package com.aashiyana.dto;
 
-public class UserLoginDetails {
+public class HotelLoginDetails {
 	private String email;
-	private String password;
-
-	
 	public String getEmail() {
 		return email;
 	}
@@ -17,4 +14,5 @@ public class UserLoginDetails {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	private String password;
 }

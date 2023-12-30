@@ -1,8 +1,7 @@
-import { useState } from "react";
-import { useHistory, useNavigate } from "react-router-dom";
-import axios from "axios";
-
-function UserLogin() {
+import { useState } from 'react';
+import axios from "axios"; 
+import { Navigate, useHistory, useNavigate } from 'react-router-dom';
+function HotelLogin() {
     
     const navigate = useNavigate();
 
@@ -24,13 +23,13 @@ function UserLogin() {
 
     function login(event) {
         event.preventDefault();
-        axios.post('http://localhost:8080/user/login', loginData).then((response => {
+        axios.post('http://localhost:8080/hotel/login', loginData).then((response => {
             console.log(response);
             console.log(response.data);
             if(response.data.status) {
-                sessionStorage.setItem('userId', response.data.userId);
+                sessionStorage.setItem('hotelId', response.data.hotelId);
                 sessionStorage.setItem('name', response.data.name);
-                navigate('/userdashboard')
+                navigate('/hoteldashboard')
             }
             else {
                 setErrorMessage(response.data.messageIfAny);
@@ -56,4 +55,7 @@ function UserLogin() {
     )
 }
 
-export default UserLogin
+export default HotelLogin
+
+// After login -----> Dashboards
+// After Registrations -----> Confirmations

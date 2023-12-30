@@ -6,8 +6,10 @@ import Cards from "./components/Cards";
 import { list, list2 } from "./assets/cards-list";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import UserLogin from "./components/Auth/UserLogin";
-import UserSignup from "./components/Auth/UserSignup";
 import Footer from "./components/Footer/Footer";
+import UserRegister from "./components/Auth/UserRegister";
+import HotelLogin from "./components/Auth/HotelLogin";
+import HotelRegister from "./components/Auth/HotelRegister";
 
 export default function App() {
   const [selectedFilter, setSelectedFilter] = useState(0);
@@ -24,7 +26,9 @@ export default function App() {
       <BrowserRouter>
          <Routes>
            <Route path='/UserLogin' element={<UserLogin />} />
-           <Route path='/UserSignup' element={<UserSignup />} />
+           <Route path='/UserRegister' element={<UserRegister />} />
+           <Route path='/HotelRegister' element={<HotelRegister />} />
+           <Route path='/HotelLogin' element={<HotelLogin/>}/>
          </Routes>
          <Footer/>
      </BrowserRouter>

@@ -52,7 +52,7 @@ public class UserController {
 	}
 
 	@PostMapping("/user/login")
-	public Status login(@RequestBody UserLoginDetails userLoginDetails) {
+	public ResponseEntity<Status> login(@RequestBody UserLoginDetails userLoginDetails) {
 		try {
 			User user = userService.login(userLoginDetails.getEmail(), userLoginDetails.getPassword());
 			UserLoginStatus status = new UserLoginStatus();
@@ -61,32 +61,40 @@ public class UserController {
 			status.setUserId(user.getUserId());
 			status.setName(user.getUserName());
 			//status.setCustomer(customer);
-			return status;
+			
+			return new ResponseEntity<Status>(status, HttpStatus.OK);
 		}
 		catch (UserServiceException e) {
 			Status status = new Status();
 			status.setStatus(false);
 			status.setMessageIfAny(e.getMessage());
-			return status;
-		}
+			
+			HttpHeaders responseHeaders = new HttpHeaders();
+			responseHeaders.set("MyResponseHeader", "MyValue");
+			
+			return new ResponseEntity<Status>(status, responseHeaders, HttpStatus.BAD_REQUEST);		}
 	}
 	
 	@PostMapping("/user/update")
-	public Status update(@RequestBody User user) {
+	public ResponseEntity<Status> update(@RequestBody User user) {
 		try {
 			userService.update(user);
 			
 			Status status = new Status();
 			status.setStatus(true);
 			status.setMessageIfAny("User updated!");
-			return status;
+			
+			return new ResponseEntity<Status>(status, HttpStatus.OK);
 		}
 		catch(UserServiceException e) {
 			Status status = new Status();
 			status.setStatus(false);
 			status.setMessageIfAny(e.getMessage());
-			return status;
-		}
+			
+			HttpHeaders responseHeaders = new HttpHeaders();
+			responseHeaders.set("MyResponseHeader", "MyValue");
+			
+			return new ResponseEntity<Status>(status, responseHeaders, HttpStatus.BAD_REQUEST);		}
 	}
 	
 	@GetMapping("/user/fetch/{id}")

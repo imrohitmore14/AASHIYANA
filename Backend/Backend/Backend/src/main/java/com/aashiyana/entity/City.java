@@ -6,7 +6,7 @@ import jakarta.persistence.Column;
 
 
 @Entity
-@Table(name = "cities")
+@Table(name = "city")
 public class City {
 	
 	@Id
