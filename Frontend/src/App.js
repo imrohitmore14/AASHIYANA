@@ -1,23 +1,33 @@
-import React from "react";
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import Home from "./components/Home/Home";
+// 
+import React, { useState } from "react";
+import Header from "./components/Header";
+import Filter from "./components/Filter";
+import Cards from "./components/Cards";
+import { list, list2 } from "./assets/cards-list";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import UserLogin from "./components/Auth/UserLogin";
 import UserSignup from "./components/Auth/UserSignup";
 import Footer from "./components/Footer/Footer";
-import Header from "./components/Header";
 
 export default function App() {
-  return (
-    // <BrowserRouter>
-    //   <Routes>
-    //     <Route path='/Home' element={<Home />} />
-    //     <Route path='/UserLogin' element={<UserLogin />} />
-    //     <Route path='/UserSignup' element={<UserSignup />} />
-    //   </Routes>
-    //   <Footer />
-    // </BrowserRouter>
-    <Home></Home>
+  const [selectedFilter, setSelectedFilter] = useState(0);
 
+  return (
+    <div className="Home">
+      <h1>Aashiyana</h1>
+      <Header/>
+      <Filter
+        selectedFilter={selectedFilter}
+        setSelectedFilter={setSelectedFilter}
+      />
+      {selectedFilter === 0 ? <Cards list={list} /> : <Cards list={list2} />}
+      <BrowserRouter>
+         <Routes>
+           <Route path='/UserLogin' element={<UserLogin />} />
+           <Route path='/UserSignup' element={<UserSignup />} />
+         </Routes>
+         <Footer/>
+     </BrowserRouter>
+    </div>
   );
 }
