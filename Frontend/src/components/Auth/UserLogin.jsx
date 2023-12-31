@@ -4,7 +4,6 @@ import axios from "axios";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function UserLogin() {
-    
     const navigate = useNavigate();
 
     const [errorMessage, setErrorMessage] = useState();
@@ -18,25 +17,40 @@ function UserLogin() {
         setLoginData(prevData => {
             return {
                 ...prevData,
-                [event.target.name] : event.target.value
+                [event.target.name]: event.target.value
             }
-        })        
+        })
+    }
+
+    function validateForm() {
+        if (!loginData.email || !loginData.password) {
+            setErrorMessage("Please enter both email address and password.");
+            return false;
+        }
+        return true;
     }
 
     function login(event) {
         event.preventDefault();
-        axios.post('http://localhost:8080/userlogin', loginData).then((response => {
-            console.log(response);
-            console.log(response.data);
-            if(response.data.status) {
-                sessionStorage.setItem('userId', response.data.userId);
-                sessionStorage.setItem('name', response.data.name);
-                navigate('/userdashboard')
-            }
-            else {
-                setErrorMessage(response.data.messageIfAny);
-            }
-        }))
+
+        if (validateForm()) {
+            axios.post('http://localhost:8080/userlogin', loginData)
+                .then(response => {
+                    console.log(response);
+                    console.log(response.data);
+                    if (response.data.status) {
+                        sessionStorage.setItem('userId', response.data.userId);
+                        sessionStorage.setItem('name', response.data.name);
+                        navigate('/userdashboard')
+                    } else {
+                        setErrorMessage(response.data.messageIfAny);
+                    }
+                })
+                .catch(error => {
+                    console.error("Error during login:", error);
+                    setErrorMessage("Error during login");
+                });
+        }
     }
 
     return (
@@ -58,4 +72,4 @@ function UserLogin() {
     )
 }
 
-export default UserLogin
+export default UserLogin;

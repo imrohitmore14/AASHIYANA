@@ -14,12 +14,12 @@ import UserDashboard from './components/Auth/UserDashboard';
 import BookingPage from './components/Auth/BookingPage';
 import Home from './components/Auth/Home';
 import AddRoom from './components/Auth/AddRoom';
+import NavigationBar from './components/Navbar/NavigationBar';
 
 export default function App() {
   return (
     <div className="Home">
-      
-      <Header></Header>
+    <NavigationBar/>
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<Home />} />

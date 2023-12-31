@@ -18,10 +18,10 @@ function AddRoom() {
         if (event.target.type === 'file') {
             value = event.target.files[0];
         }
-        // if (name === 'price') {
-        //     // Convert price to a number
-        //     value = parseFloat(value);
-        // }
+        if (name === 'price') {
+            // Convert price to a number
+            value = parseFloat(value);
+        }
         setUserData((formData) => {
             formData.set(name, value);
             return formData;

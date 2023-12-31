@@ -23,20 +23,35 @@ function HotelLogin() {
         })        
     }
 
+    function validateForm() {
+        if (!loginData.email || !loginData.password) {
+            setErrorMessage("Please enter both email address and password.");
+            return false;
+        }
+        return true;
+    }
+
     function login(event) {
         event.preventDefault();
-        axios.post('http://localhost:8080/hotellogin', loginData).then((response => {
-            console.log(response);
-            console.log(response.data);
-            if(response.data.status) {
-                sessionStorage.setItem('hotelId', response.data.hotelId);
-                sessionStorage.setItem('name', response.data.name);
-                navigate('/hoteldashboard')
-            }
-            else {
-                setErrorMessage(response.data.messageIfAny);
-            }
-        }))
+
+        if (validateForm()) {
+            axios.post('http://localhost:8080/hotellogin', loginData)
+                .then(response => {
+                    console.log(response);
+                    console.log(response.data);
+                    if (response.data.status) {
+                        sessionStorage.setItem('hotelId', response.data.hotelId);
+                        sessionStorage.setItem('name', response.data.name);
+                        navigate('/hoteldashboard')
+                    } else {
+                        setErrorMessage(response.data.messageIfAny);
+                    }
+                })
+                .catch(error => {
+                    console.error("Error during hotel login:", error);
+                    setErrorMessage("Error during hotel login");
+                });
+        }
     }
 
     return (
@@ -58,7 +73,4 @@ function HotelLogin() {
     )
 }
 
-export default HotelLogin
-
-// After login -----> Dashboards
-// After Registrations -----> Confirmations
+export default HotelLogin;

@@ -27,13 +27,21 @@ public class Room {
 	private String typeOfRoom; //TODO : Increase the enum...
 	
 	@Column(name="room_price")
-	private double price;
+	private double roomPrice;
 	
-    @Column(name="room_image")
+    public double getRoomPrice() {
+		return roomPrice;
+	}
+
+	public void setRoomPrice(double roomPrice) {
+		this.roomPrice = roomPrice;
+	}
+
+	@Column(name="room_image")
     private String roomImage;
 	
 	@Column(name="room_booking_status")
-	private String status;
+	private String status = "No";
 
 	
 	public int getRoomId() {
@@ -60,13 +68,7 @@ public class Room {
 		this.typeOfRoom = typeOfRoom;
 	}
 
-	public double getPrice() {
-		return price;
-	}
-
-	public void setPrice(double price) {
-		this.price = price;
-	}
+	
 
 	public String getRoomImage() {
 		return roomImage;

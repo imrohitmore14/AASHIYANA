@@ -18,5 +18,6 @@ public interface HotelDao extends JpaRepository<Hotel, Long> {
 	public Optional<Hotel> findByEmail(String email);
 	public Optional<Hotel> findByEmailAndPassword(String email, String password);
 
-	public Optional<Hotel> findByHotelId(int hotelId);}
+	public Optional<Hotel> findByHotelId(int hotelId);
+	}
 

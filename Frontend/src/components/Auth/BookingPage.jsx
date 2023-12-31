@@ -1,12 +1,7 @@
 import React, { useState } from "react";
-
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-
-
-
-
-
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function BookingPage() {
   const [checkInDate, setCheckInDate] = useState(null);
@@ -24,14 +19,12 @@ function BookingPage() {
 
   const handleRoomTypeChange = (e) => {
     setRoomType(e.target.value);
-    // Set room rate based on the selected room type
-    // Add logic to set the correct rates for each room type
     switch (e.target.value) {
       case "standard":
-        setRoomRate(100);
+        setRoomRate(3000);
         break;
       case "deluxe":
-        setRoomRate(150);
+        setRoomRate(5000);
         break;
       // Add more room types and rates as needed
       default:
@@ -68,27 +61,27 @@ function BookingPage() {
     <div>
       <h2>Hotel Room Booking</h2>
       <form onSubmit={handleBookingSubmit}>
-        <div>
+        <div className="form-group">
           <label>Check-in Date:</label>
-          <DatePicker selected={checkInDate} onChange={handleCheckInChange} />
-        </div>
-        <div>
+          <DatePicker className="form-control" selected={checkInDate} onChange={handleCheckInChange} />
+        </div><br/>
+        <div className="form-group">
           <label>Check-out Date:</label>
-          <DatePicker selected={checkOutDate} onChange={handleCheckOutChange} />
-        </div>
-        <div>
+          <DatePicker className="form-control" selected={checkOutDate} onChange={handleCheckOutChange} />
+        </div> <br/>
+        <div className="form-group">
           <label>Room Type:</label>
-          <select value={roomType} onChange={handleRoomTypeChange}>
+          <select className="form-control" value={roomType} onChange={handleRoomTypeChange}>
             <option value="standard">Standard</option>
             <option value="deluxe">Deluxe</option>
             {/* Add more room types as needed */}
-          </select>
+          </select> <br/>
         </div>
-        <div>
-          <label>Total Invoice Amount:</label>
-          <div>{calculateTotalAmount()}</div>
+        <div className="form-group">
+          <label>Total Invoice Amount:</label> <br/>
+          <div>{calculateTotalAmount()}</div> <br/>
         </div>
-        <button type="submit">Book Now</button>
+        <button type="submit" className="btn btn-danger">Book Now</button>
       </form>
     </div>
   );
