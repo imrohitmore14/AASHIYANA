@@ -1,6 +1,7 @@
 import { useState } from "react";
+import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from "axios";
-import { useHistory, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function HotelRegister() {
     
@@ -41,12 +42,13 @@ function HotelRegister() {
 
     function register(event) {
         event.preventDefault();
-        axios.post('http://localhost:8080/hotel/register', userData).then((response => {
+        axios.post('http://localhost:8080/hotelregister', userData).then((response => {
             console.log(response);
             console.log(response.data);
             if(response.data.status) {
                 sessionStorage.setItem('hotelId', response.data.hotelId);
-                navigate('/hotelregistrationconfirmation')
+                // navigate('/hotellogin')
+                navigate('/addRoom');
             }
             else {
                 setErrorMessage(response.data.messageIfAny);
@@ -57,6 +59,8 @@ function HotelRegister() {
     return (
         <div>
             {errorMessage && <h1>{errorMessage}</h1>}
+            <h2>Hotel Registration</h2>
+
             <form onSubmit={register}>
                 <div className="form-group">
                     <label>Hotel Name</label>

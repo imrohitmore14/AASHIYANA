@@ -27,7 +27,7 @@ public class UserController {
 	private UserService userService;
 	
 	
-	@PostMapping("/user/register")
+	@PostMapping("/userregister")
 	public ResponseEntity<Status> register(@RequestBody User user) {
 		try {
 			int id = userService.register(user);
@@ -51,7 +51,7 @@ public class UserController {
 		}
 	}
 
-	@PostMapping("/user/login")
+	@PostMapping("/userlogin")
 	public ResponseEntity<Status> login(@RequestBody UserLoginDetails userLoginDetails) {
 		try {
 			User user = userService.login(userLoginDetails.getEmail(), userLoginDetails.getPassword());
@@ -75,7 +75,7 @@ public class UserController {
 			return new ResponseEntity<Status>(status, responseHeaders, HttpStatus.BAD_REQUEST);		}
 	}
 	
-	@PostMapping("/user/update")
+	@PostMapping("/userupdate")
 	public ResponseEntity<Status> update(@RequestBody User user) {
 		try {
 			userService.update(user);

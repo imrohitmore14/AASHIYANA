@@ -5,7 +5,7 @@ function UserDashboard() {
     return (
         <div>
             <h1>Registration Done!</h1>
-            <h2>Your registered customer id is : {userId} </h2>
+            <h2>Your registered User id is : {userId} </h2>
         </div>
     )
 }

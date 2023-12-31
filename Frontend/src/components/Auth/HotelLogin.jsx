@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import axios from "axios"; 
-import { Navigate, useHistory, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 function HotelLogin() {
     
     const navigate = useNavigate();
@@ -23,7 +25,7 @@ function HotelLogin() {
 
     function login(event) {
         event.preventDefault();
-        axios.post('http://localhost:8080/hotel/login', loginData).then((response => {
+        axios.post('http://localhost:8080/hotellogin', loginData).then((response => {
             console.log(response);
             console.log(response.data);
             if(response.data.status) {
@@ -40,6 +42,7 @@ function HotelLogin() {
     return (
         <div>
             {errorMessage && <h1>{errorMessage}</h1>}
+            <h2>Hotel Login</h2>
             <form onSubmit={login}>
                 <div className="form-group">
                     <label>Email Address</label>

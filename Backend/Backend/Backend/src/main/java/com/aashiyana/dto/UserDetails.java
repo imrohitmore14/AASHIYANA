@@ -2,7 +2,6 @@ package com.aashiyana.dto;
 
 import java.time.LocalDate;
 
-import com.aashiyana.entity.User.Gender;
 
 public class UserDetails {
 	private int id;
@@ -10,7 +9,7 @@ public class UserDetails {
 	private String email;
 	private String password;
 	private LocalDate dateOfBirth;
-	private Gender gender;
+	private String gender;
 	private long phoneNo;
 	private long aadharId;
 	private String address;  
@@ -21,10 +20,10 @@ public class UserDetails {
 	public void setDateOfBirth(LocalDate dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
 	}
-	public Gender getGender() {
+	public String getGender() {
 		return gender;
 	}
-	public void setGender(Gender gender) {
+	public void setGender(String gender) {
 		this.gender = gender;
 	}
 	public long getPhoneNo() {
@@ -44,11 +43,6 @@ public class UserDetails {
 	}
 	public void setAddress(String address) {
 		this.address = address;
-	}
-	
-
-	public enum Gender {
-		MALE, FEMALE, OTHERS;
 	}
 	
 	public int getId() {

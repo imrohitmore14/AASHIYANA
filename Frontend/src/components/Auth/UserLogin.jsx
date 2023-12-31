@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { useHistory, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function UserLogin() {
     
@@ -24,7 +25,7 @@ function UserLogin() {
 
     function login(event) {
         event.preventDefault();
-        axios.post('http://localhost:8080/user/login', loginData).then((response => {
+        axios.post('http://localhost:8080/userlogin', loginData).then((response => {
             console.log(response);
             console.log(response.data);
             if(response.data.status) {
@@ -41,6 +42,7 @@ function UserLogin() {
     return (
         <div>
             {errorMessage && <h1>{errorMessage}</h1>}
+            <h2>User Login</h2>
             <form onSubmit={login}>
                 <div className="form-group">
                     <label>Email Address</label>

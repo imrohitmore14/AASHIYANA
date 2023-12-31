@@ -33,7 +33,7 @@ public class HotelController {
 	private HotelService hotelService;
 	
 	
-	@PostMapping("/hotel/register")
+	@PostMapping("/hotelregister")
 	public ResponseEntity<Status> register(HotelDetails hotelDetails) {
 		try {
 			Hotel hotel = new Hotel();
@@ -74,7 +74,7 @@ public class HotelController {
 	}
 
 
-	@PostMapping("/hotel/login")
+	@PostMapping("/hotellogin")
 	public ResponseEntity<Status> login(@RequestBody HotelLoginDetails hotelLoginDetails) {
 		try {
 			Hotel hotel = hotelService.login(hotelLoginDetails.getEmail(), hotelLoginDetails.getPassword());
@@ -98,7 +98,7 @@ public class HotelController {
 		}
 	}
 	
-	@PostMapping("/hotel/update")
+	@PostMapping("/hotelupdate")
 	public ResponseEntity<Status> update(@RequestBody Hotel hotel) {
 		try {
 			hotelService.update(hotel);
