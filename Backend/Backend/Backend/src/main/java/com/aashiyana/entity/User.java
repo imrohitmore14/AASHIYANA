@@ -24,7 +24,7 @@ public class User {
 	private LocalDate dateOfBirth;
 	
 	@Column(name="user_gender")
-	private Gender gender;  // Use the Gender enum directly here
+	private String gender;  // Use the Gender enum directly here
 	
 	@Column(name="user_phone_no")
 	private long phoneNo;
@@ -41,9 +41,6 @@ public class User {
 	@Column(name="user_address")
 	private String address;  // TODO: Increase the size in workbench
 	
-	public enum Gender {
-		MALE, FEMALE, OTHERS;
-	}
 	
 	public int getUserId() {
 		return userId;
@@ -69,11 +66,11 @@ public class User {
 		this.dateOfBirth = dateOfBirth;
 	}
 
-	public Gender getGender() {
+	public String getGender() {
 		return gender;
 	}
 
-	public void setGender(Gender gender) {
+	public void setGender(String gender) {
 		this.gender = gender;
 	}
 

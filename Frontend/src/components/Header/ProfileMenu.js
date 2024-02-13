@@ -19,11 +19,18 @@ export default function BasicMenu() {
     setAnchorEl(null);
   };
 
+  const navigate = useNavigate;
+
+  const handleAirbnbYourHome = () => {
+    // Redirect to /hotelregister
+    navigate("/hotelregister");
+  };
+
   const handleUserLogin = () => {
     return (
       <div>
         <Link
-          to="/UserLogin"
+          to="/userlogin"
           className="bg-[#eca74e] hover:bg-[#ee5e5f] duration-200 text-white font-bold py-2 px-4 rounded mt-2 mr-6 ml-4 mx-2"
         >
           Log In
@@ -35,7 +42,7 @@ export default function BasicMenu() {
     return (
       <div>
         <Link
-          to="/UserSignup"
+          to="/userregister"
           className="bg-[#eca74e] hover:bg-[#ee5e5f] duration-200 text-white font-bold py-2 px-4 rounded mt-2 mr-6 ml-4 mx-2"
         >
           Signup
@@ -73,8 +80,8 @@ export default function BasicMenu() {
           },
         }}
       >
-        <MenuItem className="menu-items">{handleUserSignup()}</MenuItem>
-        <MenuItem className="menu-items">{handleUserLogin()}</MenuItem>
+        <MenuItem className="menu-items">{handleUserSignup}</MenuItem>
+        <MenuItem className="menu-items">{handleUserLogin}</MenuItem>
         <div
           style={{
             height: "1px",
@@ -82,7 +89,7 @@ export default function BasicMenu() {
             width: "100%",
           }}
         />
-        <MenuItem onClick={handleClose} className="menu-items">
+        <MenuItem onClick={handleAirbnbYourHome} className="menu-items">
           Airbnb Your Home
         </MenuItem>
         <MenuItem onClick={handleClose} className="menu-items">

@@ -2,6 +2,8 @@ package com.aashiyana.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
@@ -12,7 +14,8 @@ import jakarta.persistence.Table;
 @Table
 public class Room {
 	@Id
-	@Column(name="room_id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="room_id" )
 	private int roomId;
 	
 	//ADD HOTEL ID
@@ -21,25 +24,25 @@ public class Room {
     private Hotel hotel;
 	
 	@Column(name="room_type")
-	private Type typeOfRoom; //TODO : Increase the enum...
+	private String typeOfRoom; //TODO : Increase the enum...
 	
 	@Column(name="room_price")
-	private double price;
+	private double roomPrice;
 	
-	@Lob
-    @Column(name="room_image")
-    private byte[] roomImage;
+    public double getRoomPrice() {
+		return roomPrice;
+	}
+
+	public void setRoomPrice(double roomPrice) {
+		this.roomPrice = roomPrice;
+	}
+
+	@Column(name="room_image")
+    private String roomImage;
 	
 	@Column(name="room_booking_status")
-	private Status status;
-	
-	public enum Type {
-		SINGLE_ROOM, DELUXE_ROOM, FAMILY_ROOM, PENTHOUSE;
-	}
-	
-	public enum Status {
-		BOOKED, FREE;
-	}
+	private String status = "No";
+
 	
 	public int getRoomId() {
 		return roomId;
@@ -57,35 +60,29 @@ public class Room {
 		this.hotel = hotel;
 	}
 
-	public Type getTypeOfRoom() {
+	public String getTypeOfRoom() {
 		return typeOfRoom;
 	}
 
-	public void setTypeOfRoom(Type typeOfRoom) {
+	public void setTypeOfRoom(String typeOfRoom) {
 		this.typeOfRoom = typeOfRoom;
 	}
 
-	public double getPrice() {
-		return price;
-	}
+	
 
-	public void setPrice(double price) {
-		this.price = price;
-	}
-
-	public byte[] getRoomImage() {
+	public String getRoomImage() {
 		return roomImage;
 	}
 
-	public void setRoomImage(byte[] roomImage) {
+	public void setRoomImage(String roomImage) {
 		this.roomImage = roomImage;
 	}
 
-	public Status getStatus() {
+	public String getStatus() {
 		return status;
 	}
 
-	public void setStatus(Status status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 

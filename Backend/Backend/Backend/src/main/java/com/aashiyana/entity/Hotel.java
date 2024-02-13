@@ -27,7 +27,7 @@ public class Hotel {
 
     //TODO : CHECK ONCE THE PINCODE ...
     @ManyToOne
-    @JoinColumn(name = "pincode")
+    @JoinColumn(name = "pincode") //TCHECK FOR CASCADE
     private City city;
 
 	@Column(name = "country")
@@ -51,15 +51,28 @@ public class Hotel {
     @Column(name = "hotel_description")
     private String hotelDescription;
 
-    @Lob
+//    @Lob
+//    @Column(name = "hotel_images") //Rather I used Sirs method to store the Image in separate folder and store Image name in DB
+//    private byte[] hotelImages;
+    
     @Column(name = "hotel_images")
-    private byte[] hotelImages;
+    private String hotelImages;
+    
+    
     
    
     // Getters and setters
 
-    public byte[] getHotelImages() {
+//    public byte[] getHotelImages() {
+//		return hotelImages;
+//	}
+
+	public String getHotelImages() {
 		return hotelImages;
+	}
+
+	public void setHotelImages(String hotelImages) {
+		this.hotelImages = hotelImages;
 	}
 
 	public Long getHotelId() {
@@ -150,7 +163,7 @@ public class Hotel {
 		this.city = city;
 	}
 
-	public void setHotelImages(byte[] hotelImages) {
-		this.hotelImages = hotelImages;
-	}
+//	public void setHotelImages(byte[] hotelImages) {
+//		this.hotelImages = hotelImages;
+//	}
 }

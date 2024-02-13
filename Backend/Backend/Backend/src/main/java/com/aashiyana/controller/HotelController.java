@@ -1,0 +1,145 @@
+package com.aashiyana.controller;
+
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.util.FileCopyUtils;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.aashiyana.dto.HotelDetails;
+import com.aashiyana.dto.HotelLoginDetails;
+import com.aashiyana.dto.HotelLoginStatus;
+import com.aashiyana.dto.HotelRegistrationStatus;
+import com.aashiyana.dto.Status;
+import com.aashiyana.entity.Hotel;
+import com.aashiyana.exception.HotelServiceException;
+import com.aashiyana.service.HotelService;
+
+@RestController
+@CrossOrigin
+public class HotelController {
+	@Autowired
+	private HotelService hotelService;
+	
+	
+	@PostMapping("/hotelregister")
+	public ResponseEntity<Status> register(HotelDetails hotelDetails) {
+		try {
+			Hotel hotel = new Hotel();
+			BeanUtils.copyProperties(hotelDetails, hotel);
+			
+			//storing the uploaded file
+			try {
+				String fileName = hotelDetails.getHotelImages().getOriginalFilename();
+				//TODO:here should be the code to generate a unique name for the file before proceeding further
+				String generatedFileName = fileName; //replace this later
+				
+				hotel.setHotelImages(generatedFileName);
+				
+				InputStream is = hotelDetails.getHotelImages().getInputStream();
+<<<<<<< HEAD
+				FileOutputStream os = new FileOutputStream("C:/Users/rmroh/Desktop/WJP Project/AASHIYANA/Backend/Backend/Backend/src/main/java/Hotel Images/" + generatedFileName); //Please give the correct path for Hotel Images folder ....
+=======
+				FileOutputStream os = new FileOutputStream("/Users/thunder/Desktop/AASHIYANA-Rohit/Backend/Backend/Backend/src/main/java/Hotel Images/" + generatedFileName); //Please give the correct path for Hotel Images folder ....
+>>>>>>> 5e353a7 (Updated Code)
+				FileCopyUtils.copy(is, os);
+			}
+			catch (IOException e) {
+				//hoping no error here hence keeping it blank
+			}
+			
+			Long id = hotelService.register(hotel);
+			HotelRegistrationStatus status = new HotelRegistrationStatus();
+			status.setStatus(true);
+			status.setMessageIfAny("Registration successful!");
+			status.setHotelId(id);
+			
+			return new ResponseEntity<Status>(status, HttpStatus.OK);
+				
+		}
+		catch(HotelServiceException e) {
+			Status status = new Status();
+			status.setStatus(false);
+			status.setMessageIfAny(e.getMessage());
+			
+			return new ResponseEntity<Status>(status, HttpStatus.BAD_REQUEST);
+		}
+	}
+
+
+	@PostMapping("/hotellogin")
+	public ResponseEntity<Status> login(@RequestBody HotelLoginDetails hotelLoginDetails) {
+		try {
+			Hotel hotel = hotelService.login(hotelLoginDetails.getEmail(), hotelLoginDetails.getPassword());
+			HotelLoginStatus status = new HotelLoginStatus();
+			status.setStatus(true);
+			status.setMessageIfAny("Login successful!");
+			status.setHotelId(hotel.getHotelId());
+			status.setName(hotel.getHotelName());
+			//status.setCustomer(customer);
+			return new ResponseEntity<Status>(status, HttpStatus.OK);
+		}
+		catch (HotelServiceException e) {
+			Status status = new Status();
+			status.setStatus(false);
+			status.setMessageIfAny(e.getMessage());
+			
+			HttpHeaders responseHeaders = new HttpHeaders();
+			responseHeaders.set("MyResponseHeader", "MyValue");
+			
+			return new ResponseEntity<Status>(status, responseHeaders, HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@PostMapping("/hotelupdate")
+	public ResponseEntity<Status> update(@RequestBody Hotel hotel) {
+		try {
+			hotelService.update(hotel);
+			
+			Status status = new Status();
+			status.setStatus(true);
+			status.setMessageIfAny("Hotel updated!");
+			
+			return new ResponseEntity<Status>(status, HttpStatus.OK);
+		}
+		catch(HotelServiceException e) {
+			Status status = new Status();
+			status.setStatus(false);
+			status.setMessageIfAny(e.getMessage());
+			
+			HttpHeaders responseHeaders = new HttpHeaders();
+			responseHeaders.set("MyResponseHeader", "MyValue");
+			
+			return new ResponseEntity<Status>(status, responseHeaders, HttpStatus.BAD_REQUEST);		}
+	}
+	
+	@GetMapping("/hotel/fetch/{id}")
+	public Hotel fetchById(@PathVariable int id) {
+		return hotelService.fetchById(id);
+		//how will we write try catch this time?
+	}
+		
+	/*@GetMapping("/customer/fetchv2/{id}")
+	public Customer fetchByIdv2(@PathVariable int id) {
+		Customer customer = customerService.fetchById(id);
+		customer.setProfilePic("/customer/fetch/profilePic/"+id);
+		return customer;
+	}*/
+	
+//	@GetMapping(path = "/user/fetch/profilePic/{id}", produces = MediaType.IMAGE_JPEG_VALUE)
+//	public byte[] getProfilePic(@PathVariable int id) throws IOException {
+//		Customer customer = customerService.fetchById(id);
+//	    return Files.readAllBytes(Paths.get("c:/uploads/" + customer.getProfilePic()));
+//	}
+}

@@ -1,69 +1,75 @@
-import React, { useState } from 'react';
-import { Container, Row, Col, Form, Button, Alert } from 'react-bootstrap';
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-const UserLogin = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+function UserLogin() {
+    const navigate = useNavigate();
 
-  const handleLogin = (e) => {
-    e.preventDefault();
+    const [errorMessage, setErrorMessage] = useState();
 
-    // Basic email validation using regex
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      setError('Invalid email address');
-      return;
+    const [loginData, setLoginData] = useState({
+        email: '',
+        password: ''
+    })
+
+    function handleInput(event) {
+        setLoginData(prevData => {
+            return {
+                ...prevData,
+                [event.target.name]: event.target.value
+            }
+        })
     }
 
-    // Basic password validation (at least 6 characters)
-    if (password.length < 6) {
-      setError('Password must be at least 6 characters');
-      return;
+    function validateForm() {
+        if (!loginData.email || !loginData.password) {
+            setErrorMessage("Please enter both email address and password.");
+            return false;
+        }
+        return true;
     }
 
-    // Clear any previous error
-    setError('');
+    function login(event) {
+        event.preventDefault();
 
-    // Add logic for handling login
-    console.log('Login:', { email, password });
-  };
+        if (validateForm()) {
+            axios.post('http://localhost:8080/userlogin', loginData)
+                .then(response => {
+                    console.log(response);
+                    console.log(response.data);
+                    if (response.data.status) {
+                        sessionStorage.setItem('userId', response.data.userId);
+                        sessionStorage.setItem('name', response.data.name);
+                        navigate('/userdashboard')
+                    } else {
+                        setErrorMessage(response.data.messageIfAny);
+                    }
+                })
+                .catch(error => {
+                    console.error("Error during login:", error);
+                    setErrorMessage("Error during login");
+                });
+        }
+    }
 
-  return (
-    <Container className="d-flex align-items-center justify-content-center" style={{ minHeight: '100vh', minWidth: '75vw' }}>
-      <Row className="justify-content-center">
-        <Col>
-          <h2 className="mb-4 text-center">Login</h2>
-          {error && <Alert variant="danger">{error}</Alert>}
-          <Form>
-            <Form.Group controlId="formBasicEmail">
-              <Form.Label>Email address</Form.Label>
-              <Form.Control
-                type="email"
-                placeholder="Enter email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </Form.Group>
-
-            <Form.Group controlId="formBasicPassword">
-              <Form.Label>Password</Form.Label>
-              <Form.Control
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </Form.Group>
-
-            <Button variant="primary" type="submit" onClick={handleLogin}>
-              Login
-            </Button>
-          </Form>
-        </Col>
-      </Row>
-    </Container>
-  );
-};
+    return (
+        <div>
+            {errorMessage && <h1>{errorMessage}</h1>}
+            <h2>User Login</h2>
+            <form onSubmit={login}>
+                <div className="form-group">
+                    <label>Email Address</label>
+                    <input type="email" name="email" className="form-control" onChange={handleInput} />
+                </div>
+                <div className="form-group">
+                    <label>Password</label>
+                    <input type="password" name="password" className="form-control" onChange={handleInput} />
+                </div>
+                <button className="btn btn-danger">Login</button>
+            </form>
+        </div>
+    )
+}
 
 export default UserLogin;

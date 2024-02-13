@@ -17,23 +17,7 @@ public class BackendApplication {
 	public static void main(String[] args) {
 		
 		SpringApplication.run(BackendApplication.class, args);
-		User sampleUser = new User();
-        sampleUser.setUserName("John Doe");
-        sampleUser.setDateOfBirth(LocalDate.of(1990, 1, 1));
-        sampleUser.setGender(User.Gender.MALE);
-        sampleUser.setPhoneNo(1234567890L);
-        sampleUser.setEmail("john.doe@example.com");
-        sampleUser.setPassword("password");
-        sampleUser.setAadharId(123456789012L);
-        sampleUser.setAddress("123 Main St, City");	
-        
-        
-        try {
-			dao.save(sampleUser);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
         
 		
 	}
