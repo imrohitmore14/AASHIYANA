@@ -76,7 +76,7 @@ function HotelRegister() {
                 </div>
                 <div className="form-group">
                     <label>Address</label>
-                    <input type="text" name="dateOfBirth" className="form-control" onChange={handleUserInput} />
+                    <input type="text" name="address" className="form-control" onChange={handleUserInput} />
                 </div>
                 <div className="form-group">
                     <label>Pincode</label>

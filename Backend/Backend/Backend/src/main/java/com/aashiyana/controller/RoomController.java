@@ -52,7 +52,11 @@ public class RoomController {
 				room.setRoomImage(generatedFileName);
 				
 				InputStream is = roomDetails.getRoomImage().getInputStream();
+<<<<<<< HEAD
 				FileOutputStream os = new FileOutputStream("C:/Users/rmroh/Desktop/WJP Project/AASHIYANA/Backend/Backend/Backend/src/main/java/Room Images/" + generatedFileName); //Please give the correct path for Hotel Images folder ....
+=======
+				FileOutputStream os = new FileOutputStream("/Users/thunder/Desktop/AASHIYANA-Rohit/Backend/Backend/Backend/src/main/java/Room Images/" + generatedFileName); //Please give the correct path for Hotel Images folder ....
+>>>>>>> 5e353a7 (Updated Code)
 				FileCopyUtils.copy(is, os);
 			}
 			catch (IOException e) {

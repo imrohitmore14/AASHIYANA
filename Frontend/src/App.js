@@ -15,6 +15,9 @@ import BookingPage from './components/Auth/BookingPage';
 import Home from './components/Auth/Home';
 import AddRoom from './components/Auth/AddRoom';
 import NavigationBar from './components/Navbar/NavigationBar';
+import UpdateHotel from './components/Auth/UpdateHotel';
+import HotelDashboard from './components/Auth/HotelDashboard';
+import UpdateUser from './components/Auth/UpdateUser';
 
 export default function App() {
   return (
@@ -30,6 +33,11 @@ export default function App() {
           <Route path='/userdashboard' element={<UserDashboard />} />
           <Route path='/booking' element={<BookingPage />} />
           <Route path='/addRoom' element={<AddRoom/>} />
+          <Route path='/updateHotel' element={<UpdateHotel/>} />
+          <Route path='/updateUser' element={<UpdateUser/>} />
+          <Route path='/hoteldashboard' element={<HotelDashboard/>} />
+
+
         </Routes>
       </BrowserRouter>
       <Footer/>
