@@ -1,0 +1,23 @@
+package com.aashiyana.dao;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
+import com.aashiyana.entity.Room;
+
+public interface RoomDao extends JpaRepository<Room, Integer> {
+    
+    @Query("SELECT count(r) FROM Room r WHERE r.roomId = ?1")
+    int findIfRoomExists(int roomId);
+    
+    Optional<Room> findByRoomId(int roomId);
+
+    List<Room> findByHotelHotelId(long hotelId);
+
+    @Query("SELECT DISTINCT r.typeOfRoom FROM Room r WHERE r.hotel.hotelId = :hotelId")
+    List<String> findAllRoomTypesWithPrices(@Param("hotelId") long hotelId);
+}

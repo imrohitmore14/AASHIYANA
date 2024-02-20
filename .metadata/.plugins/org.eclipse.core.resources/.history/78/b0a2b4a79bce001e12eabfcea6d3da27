@@ -1,0 +1,105 @@
+@RestController
+@CrossOrigin
+public class RoomController {
+    @Autowired
+    private RoomService roomService;
+
+    @PostMapping("/roomregister")
+    public ResponseEntity<Status> register(RoomDetails roomDetails) {
+        try {
+            Room room = new Room();
+            BeanUtils.copyProperties(roomDetails, room);
+            room.setHotel(roomDetails.getHotelId());
+
+            // storing the uploaded file
+            try {
+                String fileName = roomDetails.getRoomImage().getOriginalFilename();
+                // TODO: here should be the code to generate a unique name for the file before proceeding further
+                String generatedFileName = fileName; // replace this later
+
+                room.setRoomImage(generatedFileName);
+
+                InputStream is = roomDetails.getRoomImage().getInputStream();
+
+                FileOutputStream os = new FileOutputStream("C:/Users/sanke/Desktop/CDAC juhu/Major project spring-boot/AASHIYANA1.1/AASHIYANA/Backend/Backend/Backend/src/main/resources/room_img/" + generatedFileName);
+                FileCopyUtils.copy(is, os);
+            } catch (IOException e) {
+                // hoping no error here hence keeping it blank
+            }
+
+            int id = roomService.register(room);
+            RoomRegistrationStatus status = new RoomRegistrationStatus();
+            status.setStatus(true);
+            status.setMessageIfAny("Room Registration successful!");
+            status.setRoomId(id);
+
+            return new ResponseEntity<>(status, HttpStatus.OK);
+
+        } catch (HotelServiceException e) {
+            Status status = new Status();
+            status.setStatus(false);
+            status.setMessageIfAny(e.getMessage());
+
+            return new ResponseEntity<>(status, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/room/fetch/{id}")
+    public ResponseEntity<Room> fetchById(@PathVariable int id) {
+        try {
+            Room room = roomService.fetchByRoomId(id);
+            return new ResponseEntity<>(room, HttpStatus.OK);
+        } catch (HotelServiceException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/rooms/fetchAllRooms/{hotelId}")
+    public ResponseEntity<List<Room>> getAllRoomsByHotelId(@PathVariable long hotelId) {
+        try {
+            List<Room> rooms = roomService.getAllRoomsByHotelId(hotelId);
+            return new ResponseEntity<>(rooms, HttpStatus.OK);
+        } catch (HotelServiceException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @DeleteMapping("/roomdelete/{id}")
+    public ResponseEntity<Status> deleteRoom(@PathVariable int id) {
+        try {
+            roomService.deleteRoom(id);
+
+            Status status = new Status();
+            status.setStatus(true);
+            status.setMessageIfAny("room deleted successfully!");
+
+            return new ResponseEntity<>(status, HttpStatus.OK);
+        } catch (HotelServiceException e) {
+            Status status = new Status();
+            status.setStatus(false);
+            status.setMessageIfAny(e.getMessage());
+
+            return new ResponseEntity<>(status, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/rooms/fetchRoomTypes")
+    public ResponseEntity<List<String>> fetchRoomTypes(@RequestParam long hotelId) {
+        try {
+            List<String> roomTypes = roomService.getAllRoomTypes(hotelId);
+            return new ResponseEntity<>(roomTypes, HttpStatus.OK);
+        } catch (HotelServiceException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/rooms/fetchRoomRate/{hotelId}/{type}")
+    public ResponseEntity<Double> fetchRoomRate(@PathVariable long hotelId, @PathVariable String type) {
+        try {
+            double roomRate = roomService.getRoomRateByType(hotelId, type);
+            return new ResponseEntity<>(roomRate, HttpStatus.OK);
+        } catch (HotelServiceException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+}
